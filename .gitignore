@@ -31,6 +31,9 @@ yarn-error.log*
 # Plaid credentials (sensitive)
 PLAID_TEST_KEYS.txt
 
+# MongoDB credentials (sensitive)
+MONGODB_CREDENTIALS.txt
+
 # vercel
 .vercel
 
