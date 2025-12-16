@@ -9,6 +9,9 @@ const loginSchema = z.object({
   password: z.string(),
 });
 
+// Mark as dynamic since we use database
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: NextRequest) {
   try {
     await connectDB();

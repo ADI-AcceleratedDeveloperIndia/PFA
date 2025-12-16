@@ -9,8 +9,28 @@ const registerSchema = z.object({
   password: z.string().min(8),
 });
 
+// Mark as dynamic since we use database
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: NextRequest) {
   try {
+    // Check environment variables
+    if (!process.env.MONGODB_URI) {
+      console.error('MONGODB_URI is not set');
+      return NextResponse.json(
+        { error: 'Server configuration error. Please contact support.' },
+        { status: 500 }
+      );
+    }
+
+    if (!process.env.JWT_SECRET) {
+      console.error('JWT_SECRET is not set');
+      return NextResponse.json(
+        { error: 'Server configuration error. Please contact support.' },
+        { status: 500 }
+      );
+    }
+
     await connectDB();
     
     const body = await request.json();
@@ -57,8 +77,20 @@ export async function POST(request: NextRequest) {
     }
     
     console.error('Registration error:', error);
+    
+    // Provide more specific error messages
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    
+    // Check for MongoDB connection errors
+    if (errorMessage.includes('MongoServerError') || errorMessage.includes('MongoNetworkError')) {
+      return NextResponse.json(
+        { error: 'Database connection failed. Please try again later.' },
+        { status: 500 }
+      );
+    }
+    
     return NextResponse.json(
-      { error: 'Registration failed' },
+      { error: 'Registration failed. Please try again.' },
       { status: 500 }
     );
   }
