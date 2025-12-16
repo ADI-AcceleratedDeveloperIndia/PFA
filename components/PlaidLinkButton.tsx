@@ -1,7 +1,13 @@
 'use client';
 
-import { usePlaidLink } from 'react-plaid-link';
 import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
+
+// Dynamically import the Plaid Link component to avoid SSR issues
+const PlaidLinkComponent = dynamic(
+  () => import('./PlaidLinkWrapper'),
+  { ssr: false }
+);
 
 interface PlaidLinkButtonProps {
   onSuccess: (publicToken: string) => void;
@@ -29,42 +35,33 @@ export default function PlaidLinkButton({ onSuccess, className }: PlaidLinkButto
       });
   }, []);
 
-  const { open, ready } = usePlaidLink({
-    token: linkToken,
-    onSuccess: (publicToken) => {
-      onSuccess(publicToken);
-    },
-    onExit: (err, metadata) => {
-      if (err) {
-        console.error('Plaid Link error:', err);
-      }
-    },
-    onEvent: (eventName, metadata) => {
-      if (eventName === 'ERROR') {
-        console.error('Plaid Link event error:', metadata);
-      }
-    },
-  });
-
   if (loading) {
     return (
       <button
         disabled
-        className={`bg-gray-300 text-gray-500 py-3 px-6 rounded-lg font-medium tap-target ${className}`}
+        className={`bg-gray-300 text-gray-500 py-3 px-6 rounded-lg font-medium tap-target ${className || ''}`}
       >
         Loading...
       </button>
     );
   }
 
+  if (!linkToken) {
+    return (
+      <button
+        disabled
+        className={`bg-gray-300 text-gray-500 py-3 px-6 rounded-lg font-medium tap-target ${className || ''}`}
+      >
+        Unable to connect
+      </button>
+    );
+  }
+
   return (
-    <button
-      onClick={() => open()}
-      disabled={!ready || !linkToken}
-      className={`bg-primary-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed tap-target ${className}`}
-    >
-      Connect Bank Account
-    </button>
+    <PlaidLinkComponent
+      linkToken={linkToken}
+      onSuccess={onSuccess}
+      className={className}
+    />
   );
 }
-

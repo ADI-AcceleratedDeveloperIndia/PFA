@@ -1,8 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  // Handle external packages
+  // Handle external packages that need transpilation
   transpilePackages: ['react-plaid-link'],
+  // Webpack configuration for problematic packages
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+      };
+    }
+    return config;
+  },
   // Security headers
   async headers() {
     return [
@@ -32,4 +44,3 @@ const nextConfig = {
 };
 
 export default nextConfig;
-

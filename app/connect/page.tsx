@@ -3,7 +3,12 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import NavBar from '@/components/NavBar';
-import PlaidLinkButton from '@/components/PlaidLinkButton';
+import dynamic from 'next/dynamic';
+
+// Dynamically import PlaidLinkButton to avoid SSR issues
+const PlaidLinkButton = dynamic(() => import('@/components/PlaidLinkButton'), {
+  ssr: false,
+});
 
 export default function ConnectPage() {
   const router = useRouter();
