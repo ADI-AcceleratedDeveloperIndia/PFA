@@ -31,7 +31,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    console.log('Registration attempt for email:', email);
+    
     await connectDB();
+    console.log('✅ Connected to MongoDB');
     
     const body = await request.json();
     const { email, password } = registerSchema.parse(body);
@@ -39,6 +42,7 @@ export async function POST(request: NextRequest) {
     // Check if user exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
+      console.log('Registration failed: User already exists');
       return NextResponse.json(
         { error: 'User already exists' },
         { status: 400 }
@@ -46,7 +50,9 @@ export async function POST(request: NextRequest) {
     }
     
     // Create user
+    console.log('Creating new user...');
     const user = await User.create({ email, password });
+    console.log('✅ User created successfully:', user.email);
     
     // Create token
     const token = createToken({
