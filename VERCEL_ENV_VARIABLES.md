@@ -6,25 +6,29 @@ Add these environment variables in your Vercel project settings:
 
 ### 1. MongoDB Connection
 ```
-MONGODB_URI=mongodb+srv://accelerateddeveloperindia_db_user:IVf5m1lApwhot39x@pfa.hg0dkis.mongodb.net/pfa?retryWrites=true&w=majority
+MONGODB_URI=your_mongodb_connection_string
 ```
+**Get from**: Your MongoDB Atlas dashboard or local MongoDB
 
 ### 2. Plaid Sandbox Credentials
 ```
-PLAID_CLIENT_ID=694196fdc50e430021a82556
-PLAID_SECRET=e643c0888965e2fe9fbefb4a4390a5
+PLAID_CLIENT_ID=your_plaid_client_id
+PLAID_SECRET=your_plaid_secret
 PLAID_ENV=sandbox
 ```
+**Get from**: Plaid Dashboard → Team Settings → Keys → Sandbox
 
 ### 3. JWT Secret (for authentication)
 ```
-JWT_SECRET=e81cdba50c82637b645eef0a65e36e574b640f6c8fa7e95577a34309572bfff0
+JWT_SECRET=your_generated_jwt_secret
 ```
+**Generate with**: `node scripts/generate-keys.js`
 
 ### 4. Encryption Key (for Plaid tokens)
 ```
-ENCRYPTION_KEY=e25843f0100ef3dbf4c5563e4f844e838f8b44c74b6979a41dd3428fe888e917
+ENCRYPTION_KEY=your_generated_encryption_key
 ```
+**Generate with**: `node scripts/generate-keys.js`
 
 ### 5. Next.js App URL
 ```
@@ -55,26 +59,32 @@ Copy these one by one into Vercel:
 
 ```
 MONGODB_URI
-mongodb+srv://accelerateddeveloperindia_db_user:IVf5m1lApwhot39x@pfa.hg0dkis.mongodb.net/pfa?retryWrites=true&w=majority
+your_mongodb_connection_string
 
 PLAID_CLIENT_ID
-694196fdc50e430021a82556
+your_plaid_client_id
 
 PLAID_SECRET
-e643c0888965e2fe9fbefb4a4390a5
+your_plaid_secret
 
 PLAID_ENV
 sandbox
 
 JWT_SECRET
-e81cdba50c82637b645eef0a65e36e574b640f6c8fa7e95577a34309572bfff0
+your_generated_jwt_secret
 
 ENCRYPTION_KEY
-e25843f0100ef3dbf4c5563e4f844e838f8b44c74b6979a41dd3428fe888e917
+your_generated_encryption_key
 
 NEXT_PUBLIC_APP_URL
 https://your-app.vercel.app
 ```
+
+**⚠️ IMPORTANT**: Replace all placeholder values with your actual credentials from:
+- `.env` file (local)
+- MongoDB Atlas dashboard
+- Plaid Dashboard
+- Generated keys from `node scripts/generate-keys.js`
 
 **Note**: Update `NEXT_PUBLIC_APP_URL` after you get your Vercel domain!
 

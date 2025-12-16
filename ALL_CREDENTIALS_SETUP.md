@@ -11,14 +11,16 @@ Your MongoDB and Plaid credentials have been saved and configured!
 ## 🔑 Your Credentials
 
 ### MongoDB Atlas
-- **Username**: `accelerateddeveloperindia_db_user`
-- **Password**: `IVf5m1lApwhot39x`
-- **Connection String**: `mongodb+srv://accelerateddeveloperindia_db_user:IVf5m1lApwhot39x@pfa.hg0dkis.mongodb.net/pfa?retryWrites=true&w=majority`
+- **Username**: `your_mongodb_username`
+- **Password**: `your_mongodb_password`
+- **Connection String**: `mongodb+srv://username:password@cluster.mongodb.net/pfa?retryWrites=true&w=majority`
+- **Get from**: MongoDB Atlas dashboard
 
 ### Plaid Sandbox
-- **Client ID**: `694196fdc50e430021a82556`
-- **Secret**: `e643c0888965e2fe9fbefb4a4390a5`
+- **Client ID**: `your_plaid_client_id`
+- **Secret**: `your_plaid_secret`
 - **Environment**: `sandbox`
+- **Get from**: Plaid Dashboard → Team Settings → Keys → Sandbox
 
 ## ✅ What's Configured in `.env`
 
@@ -62,14 +64,20 @@ Then open http://localhost:3000
 When deploying to Vercel, add these environment variables:
 
 ```env
-MONGODB_URI=mongodb+srv://accelerateddeveloperindia_db_user:IVf5m1lApwhot39x@pfa.hg0dkis.mongodb.net/pfa?retryWrites=true&w=majority
-PLAID_CLIENT_ID=694196fdc50e430021a82556
-PLAID_SECRET=e643c0888965e2fe9fbefb4a4390a5
+MONGODB_URI=your_mongodb_connection_string
+PLAID_CLIENT_ID=your_plaid_client_id
+PLAID_SECRET=your_plaid_secret
 PLAID_ENV=sandbox
-JWT_SECRET=e81cdba50c82637b645eef0a65e36e574b640f6c8fa7e95577a34309572bfff0
-ENCRYPTION_KEY=e25843f0100ef3dbf4c5563e4f844e838f8b44c74b6979a41dd3428fe888e917
+JWT_SECRET=your_generated_jwt_secret
+ENCRYPTION_KEY=your_generated_encryption_key
 NEXT_PUBLIC_APP_URL=https://your-app.vercel.app
 ```
+
+**⚠️ Get actual values from**:
+- Your `.env` file (local)
+- MongoDB Atlas dashboard
+- Plaid Dashboard
+- Generated with `node scripts/generate-keys.js`
 
 ## 🔒 Security Notes
 

@@ -9,8 +9,8 @@ Your Plaid Sandbox credentials have been saved and configured!
 
 ## 🔑 Your Plaid Credentials
 
-- **Client ID**: `694196fdc50e430021a82556`
-- **Secret**: `e643c0888965e2fe9fbefb4a4390a5`
+- **Client ID**: `your_plaid_client_id` (get from Plaid Dashboard)
+- **Secret**: `your_plaid_secret` (get from Plaid Dashboard)
 - **Environment**: `sandbox`
 
 ## ✅ What's Configured
@@ -50,13 +50,13 @@ Then open http://localhost:3000
 
 ### 3. Deploy to Vercel
 
-When deploying to Vercel, add all these environment variables:
-- `MONGODB_URI`
-- `PLAID_CLIENT_ID=694196fdc50e430021a82556`
-- `PLAID_SECRET=e643c0888965e2fe9fbefb4a4390a5`
+When deploying to Vercel, add all these environment variables (get values from your `.env` file):
+- `MONGODB_URI` (your MongoDB connection string)
+- `PLAID_CLIENT_ID` (your Plaid Client ID)
+- `PLAID_SECRET` (your Plaid Secret)
 - `PLAID_ENV=sandbox`
-- `JWT_SECRET` (from .env)
-- `ENCRYPTION_KEY` (from .env)
+- `JWT_SECRET` (from .env - generated)
+- `ENCRYPTION_KEY` (from .env - generated)
 - `NEXT_PUBLIC_APP_URL` (your Vercel URL)
 
 ## 🔒 Security Notes
