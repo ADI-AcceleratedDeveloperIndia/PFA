@@ -28,11 +28,11 @@ yarn-error.log*
 .env*.local
 .env
 
-# Plaid credentials (sensitive)
+# Sensitive credential files (never commit)
 PLAID_TEST_KEYS.txt
-
-# MongoDB credentials (sensitive)
 MONGODB_CREDENTIALS.txt
+*_CREDENTIALS.txt
+*_KEYS.txt
 
 # vercel
 .vercel
@@ -40,5 +40,3 @@ MONGODB_CREDENTIALS.txt
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-PLAID_TEST_KEYS.txt
