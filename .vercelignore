@@ -1,0 +1,10 @@
+# Files to ignore during Vercel deployment
+node_modules
+.git
+.env
+.env.local
+.env*.local
+PLAID_TEST_KEYS.txt
+MONGODB_CREDENTIALS.txt
+*.log
+

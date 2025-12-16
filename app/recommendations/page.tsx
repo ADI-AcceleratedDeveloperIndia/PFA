@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import NavBar from '@/components/NavBar';
-import { creditCards } from '@/lib/creditCards';
+import type { CreditCard } from '@/lib/creditCards';
 
 interface Recommendation {
   type: string;
@@ -11,13 +11,13 @@ interface Recommendation {
   monthlySpend?: number;
   probability?: number;
   expectedAmount?: number;
-  recommendedCard: typeof creditCards[0];
+  recommendedCard: CreditCard;
   reason: string;
 }
 
 interface RecommendationsData {
   recommendations: Recommendation[];
-  topCards: typeof creditCards;
+  topCards: CreditCard[];
 }
 
 export default function RecommendationsPage() {

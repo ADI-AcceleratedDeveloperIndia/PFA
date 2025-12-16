@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Handle external packages
+  transpilePackages: ['react-plaid-link'],
   // Security headers
   async headers() {
     return [
