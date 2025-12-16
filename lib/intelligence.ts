@@ -248,7 +248,7 @@ export async function predictNextSpends(
   
   // High probability for recurring expenses due soon
   const now = new Date();
-  recurring.forEach((exp) => {
+  for (const exp of recurring) {
     if (exp.nextExpected && exp.nextExpected > now) {
       const daysUntil = (exp.nextExpected.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
       if (daysUntil <= 7) {
@@ -264,7 +264,7 @@ export async function predictNextSpends(
         };
       }
     }
-  });
+  }
   
   // Medium probability for frequent categories
   patterns.slice(0, 5).forEach((pattern) => {
