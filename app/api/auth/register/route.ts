@@ -31,13 +31,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.log('Registration attempt for email:', email);
-    
     await connectDB();
     console.log('✅ Connected to MongoDB');
     
     const body = await request.json();
     const { email, password } = registerSchema.parse(body);
+    
+    console.log('Registration attempt for email:', email);
     
     // Check if user exists
     const existingUser = await User.findOne({ email });
