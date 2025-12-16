@@ -79,9 +79,9 @@ export default function ConnectPage() {
                   <div className="text-sm text-gray-500 space-y-2 pt-4 border-t">
                     <p className="font-medium">What happens next?</p>
                     <ul className="list-disc list-inside space-y-1 ml-2">
-                      <li>You'll be redirected to Plaid's secure connection flow</li>
+                      <li>You&apos;ll be redirected to Plaid&apos;s secure connection flow</li>
                       <li>Select your bank and sign in</li>
-                      <li>We'll import your recent transactions</li>
+                      <li>We&apos;ll import your recent transactions</li>
                       <li>Your data is encrypted and secure</li>
                     </ul>
                   </div>

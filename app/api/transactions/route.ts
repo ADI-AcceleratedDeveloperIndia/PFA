@@ -4,6 +4,9 @@ import Transaction from '@/models/Transaction';
 import { getUserIdFromRequest } from '@/lib/auth';
 import { Types } from 'mongoose';
 
+// Mark as dynamic since we use cookies
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const userId = getUserIdFromRequest(request);

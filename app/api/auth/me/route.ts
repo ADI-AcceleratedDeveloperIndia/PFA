@@ -3,6 +3,9 @@ import connectDB from '@/lib/db';
 import User from '@/models/User';
 import { getUserIdFromRequest } from '@/lib/auth';
 
+// Mark as dynamic since we use cookies
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const userId = getUserIdFromRequest(request);

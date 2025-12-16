@@ -8,6 +8,9 @@ import { Types } from 'mongoose';
 import { plaidClient } from '@/lib/plaid';
 import { decrypt } from '@/lib/encryption';
 
+// Mark as dynamic since we use cookies
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const userId = getUserIdFromRequest(request);

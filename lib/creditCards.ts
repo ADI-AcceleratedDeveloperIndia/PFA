@@ -14,6 +14,7 @@ export interface CreditCard {
     amount: number;
     spendRequirement: number;
     timeframe: number; // months
+    notes?: string;
   };
   exclusions?: string[]; // Categories that don't earn rewards
 }

@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { plaidClient } from '@/lib/plaid';
 import { getUserIdFromRequest } from '@/lib/auth';
+import { Products, CountryCode } from 'plaid';
+
+// Mark as dynamic since we use cookies
+export const dynamic = 'force-dynamic';
 
 export async function POST(request: NextRequest) {
   try {
@@ -17,8 +21,8 @@ export async function POST(request: NextRequest) {
         client_user_id: userId,
       },
       client_name: 'PFA - Personal Finance Agent',
-      products: ['transactions'],
-      country_codes: ['US'],
+      products: [Products.Transactions],
+      country_codes: [CountryCode.Us],
       language: 'en',
       webhook: process.env.NEXT_PUBLIC_APP_URL
         ? `${process.env.NEXT_PUBLIC_APP_URL}/api/plaid/webhook`

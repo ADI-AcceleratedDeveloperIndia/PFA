@@ -7,6 +7,10 @@ import { encrypt } from '@/lib/encryption';
 import Transaction from '@/models/Transaction';
 import { learnMerchant, matchTransactionToMerchant } from '@/lib/merchantLearning';
 import { Types } from 'mongoose';
+import { CountryCode } from 'plaid';
+
+// Mark as dynamic since we use cookies
+export const dynamic = 'force-dynamic';
 
 export async function POST(request: NextRequest) {
   try {
@@ -48,7 +52,7 @@ export async function POST(request: NextRequest) {
       try {
         const instResponse = await plaidClient.institutionsGetById({
           institution_id: institutionId,
-          country_codes: ['US'],
+          country_codes: [CountryCode.Us],
         });
         institutionName = instResponse.data.institution.name;
       } catch (error) {
