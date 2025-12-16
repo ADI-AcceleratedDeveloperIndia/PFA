@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { usePlaidLink } from 'react-plaid-link';
 
 interface PlaidLinkWrapperProps {
   linkToken: string;
@@ -9,21 +10,15 @@ interface PlaidLinkWrapperProps {
 }
 
 export default function PlaidLinkWrapper({ linkToken, onSuccess, className }: PlaidLinkWrapperProps) {
-  const [PlaidLink, setPlaidLink] = useState<any>(null);
-  const [ready, setReady] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  // Dynamically load react-plaid-link only on client
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      import('react-plaid-link').then((module) => {
-        setPlaidLink(module.usePlaidLink);
-        setReady(true);
-      });
-    }
+    setMounted(true);
   }, []);
 
-  const plaidLinkHook = PlaidLink && ready ? PlaidLink({
-    token: linkToken,
+  // Always call the hook - React requires hooks to be called unconditionally
+  const { open, ready } = usePlaidLink({
+    token: linkToken || null,
     onSuccess: (publicToken: string) => {
       onSuccess(publicToken);
     },
@@ -37,15 +32,31 @@ export default function PlaidLinkWrapper({ linkToken, onSuccess, className }: Pl
         console.error('Plaid Link event error:', metadata);
       }
     },
-  }) : null;
+  });
 
-  const open = plaidLinkHook?.open || (() => {});
-  const isReady = plaidLinkHook?.ready || false;
+  const handleClick = () => {
+    if (ready && linkToken) {
+      open();
+    }
+  };
+
+  const isReady = ready && mounted && !!linkToken;
+
+  if (!mounted) {
+    return (
+      <button
+        disabled
+        className={`bg-gray-300 text-gray-500 py-3 px-6 rounded-lg font-medium tap-target ${className || ''}`}
+      >
+        Loading...
+      </button>
+    );
+  }
 
   return (
     <button
-      onClick={() => open()}
-      disabled={!isReady || !ready}
+      onClick={handleClick}
+      disabled={!isReady}
       className={`bg-primary-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed tap-target ${className || ''}`}
     >
       Connect Bank Account
