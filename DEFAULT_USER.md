@@ -3,7 +3,7 @@
 ## 🔐 Default Login
 
 **Email:** `demo@pfa.com`  
-**Password:** `9FAdem@`
+**Password:** `9FAdem@1`
 
 ✅ **Default user has been created in your MongoDB database!**
 
@@ -35,7 +35,7 @@ This will create the default user if it doesn't exist.
 
 2. **Login with:**
    - Email: `demo@pfa.com`
-   - Password: `9FAdem@`
+   - Password: `9FAdem@1`
 
 3. **You're in!** 🎉
 

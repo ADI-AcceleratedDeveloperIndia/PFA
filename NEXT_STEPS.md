@@ -24,7 +24,7 @@ This will create the default user in your Vercel MongoDB database.
 2. Click **"Login"** (not Register)
 3. Enter:
    - **Email:** `demo@pfa.com`
-   - **Password:** `9FAdem@`
+   - **Password:** `9FAdem@1`
 4. Click **"Login"**
 
 ## ✅ Step 3: Test Registration (Optional)
@@ -34,7 +34,7 @@ Now registration should also work! Try registering a new account if you want.
 ## 🎯 Default Credentials
 
 **Email:** `demo@pfa.com`  
-**Password:** `9FAdem@`
+**Password:** `9FAdem@1`
 
 ---
 

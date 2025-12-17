@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     await connectDB();
 
     const DEFAULT_EMAIL = 'demo@pfa.com';
-    const DEFAULT_PASSWORD = '9FAdem@';
+    const DEFAULT_PASSWORD = '9FAdem@1';
 
     // Check if user already exists
     const existingUser = await User.findOne({ email: DEFAULT_EMAIL }).select('+password');

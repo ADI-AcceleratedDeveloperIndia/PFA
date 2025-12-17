@@ -37,20 +37,20 @@ After redeploy, visit this URL in your browser:
 https://pfa-phi.vercel.app/api/seed-user
 ```
 
-This will create the default user: `demo@pfa.com` / `demo12345`
+This will create (or reset) the default user: `demo@pfa.com` / `9FAdem@1`
 
 ### Step 5: Login
 
 1. Go to: https://pfa-phi.vercel.app
 2. Click **Login**
 3. Email: `demo@pfa.com`
-4. Password: `demo12345`
+4. Password: `9FAdem@1`
 5. Click **Login**
 
 ## 🎯 Default Credentials
 
 **Email:** `demo@pfa.com`  
-**Password:** `demo12345`
+**Password:** `9FAdem@1`
 
 ## ⚠️ Most Likely Issue
 
@@ -59,4 +59,5 @@ This will create the default user: `demo@pfa.com` / `demo12345`
 ---
 
 **Do Step 1 first - that's 99% likely the issue!**
+
 

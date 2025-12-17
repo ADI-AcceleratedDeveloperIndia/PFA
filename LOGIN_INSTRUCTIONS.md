@@ -31,7 +31,7 @@ After registering, you can login with:
 For the hosted demo deployment you can also use this default user:
 
 - Email: `demo@pfa.com`
-- Password: `9FAdem@`
+- Password: `9FAdem@1`
 
 Or use your real email:
 - Email: `your-email@gmail.com`

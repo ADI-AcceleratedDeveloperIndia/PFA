@@ -48,7 +48,7 @@ userSchema.pre('save', async function (next) {
 const User = mongoose.models.User || mongoose.model('User', userSchema);
 
   const DEFAULT_EMAIL = 'demo@pfa.com';
-  const DEFAULT_PASSWORD = '9FAdem@';
+  const DEFAULT_PASSWORD = '9FAdem@1';
 
 async function seedUser() {
   try {
