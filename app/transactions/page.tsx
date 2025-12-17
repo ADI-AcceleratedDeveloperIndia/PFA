@@ -126,7 +126,7 @@ export default function TransactionsPage() {
                 Connect Bank Account
               </a>
             </div>
-          ) : transactions.length > 0 ? (
+          ) : (
             <div className="space-y-2">
               {transactions.map((tx) => (
                 <div
