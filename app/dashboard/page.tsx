@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import NavBar from '@/components/NavBar';
 import Link from 'next/link';
 import { format, formatDistanceToNow } from 'date-fns';
+import NearbyRewards from '@/components/NearbyRewards';
 
 interface DashboardData {
   balance: {
@@ -230,25 +231,31 @@ export default function DashboardPage() {
           )}
 
           {/* Quick Actions */}
-          <div className="grid grid-cols-2 gap-4">
-            <Link
-              href="/transactions"
-              className="bg-white rounded-2xl shadow-sm p-6 text-center hover:shadow-md transition-shadow tap-target"
-            >
-              <p className="text-2xl mb-2">💳</p>
-              <p className="font-medium">View Transactions</p>
-            </Link>
-            <Link
-              href="/recommendations"
-              className="bg-white rounded-2xl shadow-sm p-6 text-center hover:shadow-md transition-shadow tap-target"
-            >
-              <p className="text-2xl mb-2">🎯</p>
-              <p className="font-medium">Card Recommendations</p>
-            </Link>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="md:col-span-2">
+              <NearbyRewards />
+            </div>
+            <div className="space-y-4">
+              <Link
+                href="/transactions"
+                className="block bg-white rounded-2xl shadow-sm p-6 text-center hover:shadow-md transition-shadow tap-target"
+              >
+                <p className="text-2xl mb-2">💳</p>
+                <p className="font-medium">View Transactions</p>
+              </Link>
+              <Link
+                href="/recommendations"
+                className="block bg-white rounded-2xl shadow-sm p-6 text-center hover:shadow-md transition-shadow tap-target"
+              >
+                <p className="text-2xl mb-2">🎯</p>
+                <p className="font-medium">Card Recommendations</p>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
     </>
   );
 }
+
 
