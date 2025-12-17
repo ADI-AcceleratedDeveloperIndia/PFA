@@ -11,6 +11,7 @@ export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -101,7 +102,7 @@ export default function LoginPage() {
               </label>
               <input
                 id="password"
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -110,6 +111,18 @@ export default function LoginPage() {
                 placeholder="••••••••"
                 autoComplete={isLogin ? 'current-password' : 'new-password'}
               />
+              <div className="mt-2 flex items-center">
+                <input
+                  type="checkbox"
+                  id="showPassword"
+                  checked={showPassword}
+                  onChange={(e) => setShowPassword(e.target.checked)}
+                  className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+                />
+                <label htmlFor="showPassword" className="ml-2 text-sm text-gray-600 cursor-pointer">
+                  Show password
+                </label>
+              </div>
             </div>
 
             <button
@@ -125,4 +138,5 @@ export default function LoginPage() {
     </div>
   );
 }
+
 
