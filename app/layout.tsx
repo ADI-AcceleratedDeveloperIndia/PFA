@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import ServiceWorkerClient from "@/components/ServiceWorkerClient";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "PFA - Personal Finance Agent",
@@ -25,7 +26,10 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased bg-gray-50">
         <ServiceWorkerClient />
-        {children}
+        <div className="min-h-screen flex flex-col">
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   );
