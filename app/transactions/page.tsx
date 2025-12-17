@@ -113,17 +113,20 @@ export default function TransactionsPage() {
             </div>
           )}
 
-          {transactions.length === 0 ? (
+          {transactions.length === 0 && !loading ? (
             <div className="bg-white rounded-2xl shadow-sm p-12 text-center">
-              <p className="text-gray-600 mb-4">No transactions found.</p>
+              <p className="text-gray-600 mb-2">No transactions found.</p>
+              <p className="text-sm text-gray-500 mb-4">
+                {error ? 'Failed to load transactions. Make sure you have connected a bank account.' : 'Connect a bank account via Plaid to see your transactions here.'}
+              </p>
               <a
                 href="/connect"
-                className="text-primary-600 font-medium hover:underline tap-target"
+                className="inline-block bg-primary-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-700 transition-colors tap-target"
               >
-                Connect a bank account to get started
+                Connect Bank Account
               </a>
             </div>
-          ) : (
+          ) : transactions.length > 0 ? (
             <div className="space-y-2">
               {transactions.map((tx) => (
                 <div
@@ -186,4 +189,5 @@ export default function TransactionsPage() {
     </>
   );
 }
+
 
