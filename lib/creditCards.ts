@@ -227,19 +227,23 @@ export function getBestCardForCategory(
   monthlySpend: number = 0
 ): CreditCard | null {
   let bestCard: CreditCard | null = null;
-  let bestReward = 0;
+  let bestScore = -Infinity;
   
   for (const card of creditCards) {
     for (const reward of card.rewards) {
       if (reward.category === category || reward.category === 'all') {
-        const effectiveRate = reward.category === category ? reward.rate : 0;
-        const annualSpend = monthlySpend * 12;
-        const cappedSpend = reward.cap ? Math.min(annualSpend, reward.cap) : annualSpend;
-        const annualReward = (cappedSpend * effectiveRate) / 100;
-        const netReward = annualReward - card.annualFee;
-        
-        if (netReward > bestReward) {
-          bestReward = netReward;
+        // For demo purposes, we prioritize higher reward rates for the target category,
+        // and lightly penalize high annual fees. This avoids everything collapsing to
+        // a single no-fee card when spend is low.
+        const isExactCategory = reward.category === category;
+        const baseRate = reward.rate;
+        const categoryWeight = isExactCategory ? 1 : 0.4; // give some value to "all" rewards
+        const feePenalty = card.annualFee / 100; // small penalty for higher fees
+
+        const score = baseRate * categoryWeight - feePenalty;
+
+        if (score > bestScore) {
+          bestScore = score;
           bestCard = card;
         }
       }
