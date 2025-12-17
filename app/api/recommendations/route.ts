@@ -62,10 +62,27 @@ export async function GET(request: NextRequest) {
       }
     }
     
-    // General recommendations (best overall cards)
-    const topCards = creditCards
-      .filter((card) => card.annualFee === 0 || card.signupBonus)
-      .slice(0, 3);
+    // General recommendations (best overall cards for key demo categories)
+    const demoCategories = [
+      'dining',
+      'grocery_stores',
+      'gas_stations',
+      'online_shopping',
+      'streaming',
+      'transit',
+      'travel_general',
+    ];
+
+    const seen = new Set<string>();
+    const topCards = demoCategories
+      .map((cat) => getBestCardForCategory(cat, 500))
+      .filter((card): card is NonNullable<typeof card> => !!card)
+      .filter((card) => {
+        if (seen.has(card.id)) return false;
+        seen.add(card.id);
+        return true;
+      })
+      .slice(0, 6);
     
     return NextResponse.json({
       recommendations,

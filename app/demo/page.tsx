@@ -1,9 +1,19 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import NavBar from '@/components/NavBar';
 
-type DemoScenarioKey = 'coffee' | 'groceries' | 'gas';
+type DemoScenarioKey =
+  | 'coffee'
+  | 'groceries'
+  | 'gas'
+  | 'fine_dining'
+  | 'fast_food'
+  | 'online_shopping'
+  | 'streaming'
+  | 'rideshare'
+  | 'hotel'
+  | 'flight';
 
 interface Scenario {
   key: DemoScenarioKey;
@@ -36,10 +46,26 @@ const SCENARIOS: Scenario[] = [
     emoji: '☕️',
   },
   {
+    key: 'fine_dining',
+    title: 'Dinner out',
+    subtitle: 'Evening at Oceanview Steakhouse',
+    category: 'dining',
+    merchantName: 'Oceanview Steakhouse',
+    emoji: '🍽️',
+  },
+  {
+    key: 'fast_food',
+    title: 'Quick bite',
+    subtitle: 'Lunch at Burger Planet',
+    category: 'dining',
+    merchantName: 'Burger Planet',
+    emoji: '🍔',
+  },
+  {
     key: 'groceries',
     title: 'Groceries run',
     subtitle: 'Weekly visit to City Supermarket',
-    category: 'groceries',
+    category: 'grocery_stores',
     merchantName: 'City Supermarket',
     emoji: '🛒',
   },
@@ -47,9 +73,49 @@ const SCENARIOS: Scenario[] = [
     key: 'gas',
     title: 'Fuel stop',
     subtitle: 'Evening at Urban Gas Station',
-    category: 'gas',
+    category: 'gas_stations',
     merchantName: 'Urban Gas Station',
     emoji: '⛽️',
+  },
+  {
+    key: 'online_shopping',
+    title: 'Online shopping',
+    subtitle: 'Electronics at ShopNow.com',
+    category: 'online_shopping',
+    merchantName: 'ShopNow Electronics',
+    emoji: '🛍️',
+  },
+  {
+    key: 'streaming',
+    title: 'Streaming subscription',
+    subtitle: 'Monthly charge from StreamFlix',
+    category: 'streaming',
+    merchantName: 'StreamFlix',
+    emoji: '📺',
+  },
+  {
+    key: 'rideshare',
+    title: 'Rideshare trip',
+    subtitle: 'Airport ride with QuickRide',
+    category: 'transit',
+    merchantName: 'QuickRide',
+    emoji: '🚗',
+  },
+  {
+    key: 'hotel',
+    title: 'Hotel stay',
+    subtitle: 'Weekend at Grandview Hotel',
+    category: 'travel_general',
+    merchantName: 'Grandview Hotel',
+    emoji: '🏨',
+  },
+  {
+    key: 'flight',
+    title: 'Flight booking',
+    subtitle: 'Round trip with Skyline Air',
+    category: 'travel_general',
+    merchantName: 'Skyline Air',
+    emoji: '✈️',
   },
 ];
 
@@ -85,6 +151,7 @@ export default function DemoPage() {
       }
       const data: RecommendationsResponse = await res.json();
 
+      // Choose a card whose demo categories best match this scenario
       const match =
         data.topCards.find((c) =>
           c.bestForCategories?.includes(selected.category)
