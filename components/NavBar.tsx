@@ -19,6 +19,7 @@ export default function NavBar() {
     { href: '/transactions', label: 'Transactions', icon: '💳' },
     { href: '/recommendations', label: 'Cards', icon: '🎯' },
     { href: '/connect', label: 'Connect', icon: '🔗' },
+    { href: '/demo', label: 'Demo Journey', icon: '🧭' },
   ];
 
   return (
@@ -93,4 +94,5 @@ export default function NavBar() {
     </nav>
   );
 }
+
 
