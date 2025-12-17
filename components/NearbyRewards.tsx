@@ -25,13 +25,13 @@ const DEMO_ZONES: NearbyMerchantZone[] = [
   },
   {
     name: 'City Supermarket (Demo)',
-    category: 'groceries',
+    category: 'grocery_stores',
     lat: 40.7128,
     lng: -74.006,
   },
   {
     name: 'Urban Gas Station (Demo)',
-    category: 'gas',
+    category: 'gas_stations',
     lat: 34.0522,
     lng: -118.2437,
   },

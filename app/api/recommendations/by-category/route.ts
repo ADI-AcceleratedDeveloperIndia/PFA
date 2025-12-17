@@ -25,17 +25,22 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const allowedCategories = new Set([
-      'dining',
-      'grocery_stores',
-      'gas_stations',
-      'online_shopping',
-      'streaming',
-      'transit',
-      'travel_general',
+    const allowedCategories = new Map<string, string>([
+      ['dining', 'dining'],
+      ['grocery_stores', 'grocery_stores'],
+      ['groceries', 'grocery_stores'],
+      ['gas_stations', 'gas_stations'],
+      ['gas', 'gas_stations'],
+      ['online_shopping', 'online_shopping'],
+      ['streaming', 'streaming'],
+      ['transit', 'transit'],
+      ['travel_general', 'travel_general'],
+      ['travel', 'travel_general'],
     ]);
 
-    if (!allowedCategories.has(category)) {
+    const normalized = allowedCategories.get(category);
+
+    if (!normalized) {
       return NextResponse.json(
         { error: 'Unsupported category for demo', category },
         { status: 400 }
@@ -43,7 +48,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Use a representative monthly spend for demo purposes
-    const card = getBestCardForCategory(category, 500);
+    const card = getBestCardForCategory(normalized, 500);
 
     if (!card) {
       return NextResponse.json(
