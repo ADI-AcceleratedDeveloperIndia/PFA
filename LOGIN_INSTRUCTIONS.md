@@ -26,13 +26,12 @@ After registering, you can login with:
 - **Email**: The email you used to register
 - **Password**: The password you set
 
-## 🧪 Test Credentials (Create Your Own)
+## 🧪 Demo Credentials
 
-Since there's no default account, you can use any credentials:
+For the hosted demo deployment you can also use this default user:
 
-**Example:**
-- Email: `demo@test.com`
-- Password: `demo12345`
+- Email: `demo@pfa.com`
+- Password: `9FAdem@`
 
 Or use your real email:
 - Email: `your-email@gmail.com`
@@ -63,4 +62,5 @@ Once logged in, you can:
 ---
 
 **Remember**: There's no default account - you must register first!
+
 

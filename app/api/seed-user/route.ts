@@ -11,14 +11,18 @@ export async function POST(request: NextRequest) {
     await connectDB();
 
     const DEFAULT_EMAIL = 'demo@pfa.com';
-    const DEFAULT_PASSWORD = 'demo12345';
+    const DEFAULT_PASSWORD = '9FAdem@';
 
     // Check if user already exists
-    const existingUser = await User.findOne({ email: DEFAULT_EMAIL });
+    const existingUser = await User.findOne({ email: DEFAULT_EMAIL }).select('+password');
     if (existingUser) {
+      // Always reset the default password for demo purposes
+      existingUser.password = DEFAULT_PASSWORD;
+      await existingUser.save();
+
       return NextResponse.json({
         success: true,
-        message: 'Default user already exists',
+        message: 'Default user password reset',
         email: DEFAULT_EMAIL,
         password: DEFAULT_PASSWORD,
       });
@@ -47,4 +51,5 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
 
