@@ -1,7 +1,8 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import NavBar from '@/components/NavBar';
+import type { CreditCard } from '@/lib/creditCards';
 
 type DemoScenarioKey =
   | 'coffee'
@@ -24,16 +25,9 @@ interface Scenario {
   emoji: string;
 }
 
-interface RecommendationCard {
-  name: string;
-  issuer: string;
-  network: string;
-  bestForCategories: string[];
-  rewardRateDescription: string;
-}
-
-interface RecommendationsResponse {
-  topCards: RecommendationCard[];
+interface ByCategoryResponse {
+  category: string;
+  card: CreditCard;
 }
 
 const SCENARIOS: Scenario[] = [
@@ -124,7 +118,7 @@ export default function DemoPage() {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [card, setCard] = useState<RecommendationCard | null>(null);
+  const [card, setCard] = useState<CreditCard | null>(null);
 
   const handleScenarioChange = (scenario: Scenario) => {
     setSelected(scenario);
@@ -145,19 +139,17 @@ export default function DemoPage() {
     setCard(null);
 
     try {
-      const res = await fetch('/api/recommendations');
+      const res = await fetch(
+        `/api/recommendations/by-category?category=${encodeURIComponent(
+          selected.category
+        )}`
+      );
       if (!res.ok) {
-        throw new Error('Failed to load recommendations');
+        throw new Error('Failed to load scenario recommendation');
       }
-      const data: RecommendationsResponse = await res.json();
+      const data: ByCategoryResponse = await res.json();
 
-      // Choose a card whose demo categories best match this scenario
-      const match =
-        data.topCards.find((c) =>
-          c.bestForCategories?.includes(selected.category)
-        ) || data.topCards[0];
-
-      setCard(match || null);
+      setCard(data.card || null);
       setStep(3);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Could not load suggestions');
@@ -284,12 +276,15 @@ export default function DemoPage() {
                 <p className="text-base font-semibold text-gray-900">
                   {card.name}{' '}
                   <span className="text-xs text-gray-500">
-                    ({card.issuer} · {card.network})
+                    ({card.issuer})
                   </span>
                 </p>
-                <p className="text-xs text-gray-700">
-                  {card.rewardRateDescription}
-                </p>
+                {card.rewards && card.rewards.length > 0 && (
+                  <p className="text-xs text-gray-700">
+                    Top rewards: {card.rewards[0].rate}x on{' '}
+                    {card.rewards[0].category.replace(/_/g, ' ')}
+                  </p>
+                )}
               </div>
             )}
           </div>

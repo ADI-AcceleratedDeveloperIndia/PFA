@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import type { CreditCard } from '@/lib/creditCards';
 
 interface NearbyMerchantZone {
   name: string;
@@ -9,16 +10,9 @@ interface NearbyMerchantZone {
   lng: number;
 }
 
-interface RecommendationCard {
-  name: string;
-  issuer: string;
-  network: string;
-  bestForCategories: string[];
-  rewardRateDescription: string;
-}
-
-interface RecommendationsResponse {
-  topCards: RecommendationCard[];
+interface ByCategoryResponse {
+  category: string;
+  card: CreditCard;
 }
 
 // Simple demo zones (no tracking, only used when user explicitly taps the button)
@@ -62,7 +56,7 @@ export default function NearbyRewards() {
   const [suggestion, setSuggestion] = useState<{
     merchantName: string;
     category: string;
-    card?: RecommendationCard;
+    card?: CreditCard;
   } | null>(null);
 
   const handleCheckNearby = () => {
@@ -93,21 +87,20 @@ export default function NearbyRewards() {
         });
 
         try {
-          const res = await fetch('/api/recommendations');
+          const res = await fetch(
+            `/api/recommendations/by-category?category=${encodeURIComponent(
+              closest.category
+            )}`
+          );
           if (!res.ok) {
             throw new Error('Failed to load card recommendations');
           }
-          const data: RecommendationsResponse = await res.json();
-
-          const byCategory =
-            data.topCards.find((card) =>
-              card.bestForCategories?.includes(closest.category)
-            ) || data.topCards[0];
+          const data: ByCategoryResponse = await res.json();
 
           setSuggestion({
             merchantName: closest.name,
             category: closest.category,
-            card: byCategory,
+            card: data.card,
           });
         } catch (e) {
           setError(
@@ -168,9 +161,15 @@ export default function NearbyRewards() {
           <p className="text-sm text-gray-900 font-semibold">
             Use <span className="text-primary-700">{suggestion.card.name}</span> for best rewards here.
           </p>
-          <p className="text-xs text-gray-600 mt-1">
-            {suggestion.card.rewardRateDescription}
-          </p>
+          {suggestion.card.rewards && (
+            <p className="text-xs text-gray-600 mt-1">
+              Top rewards category:{" "}
+              <span className="font-medium">
+                {suggestion.card.rewards[0].category.replace(/_/g, " ")} –{" "}
+                {suggestion.card.rewards[0].rate}x
+              </span>
+            </p>
+          )}
         </div>
       )}
     </div>
