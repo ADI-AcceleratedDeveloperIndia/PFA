@@ -18,6 +18,7 @@ export async function POST(request: NextRequest) {
     if (existingUser) {
       // Always reset the default password for demo purposes
       existingUser.password = DEFAULT_PASSWORD;
+      existingUser.markModified('password'); // Ensure password is marked as modified
       await existingUser.save();
 
       return NextResponse.json({
