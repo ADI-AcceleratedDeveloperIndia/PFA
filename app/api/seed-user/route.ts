@@ -12,21 +12,30 @@ async function seedDefaultUser() {
   const DEFAULT_EMAIL = 'demo@pfa.com';
   const DEFAULT_PASSWORD = '9FAdem@1';
 
-  // Check if user already exists
-  const existingUser = await User.findOne({ email: DEFAULT_EMAIL }).select('+password');
-  if (existingUser) {
-    // Always reset the default password for demo purposes
-    existingUser.password = DEFAULT_PASSWORD;
-    existingUser.markModified('password'); // Ensure password is marked as modified
-    await existingUser.save();
+    // Check if user already exists
+    const existingUser = await User.findOne({ email: DEFAULT_EMAIL }).select('+password');
+    if (existingUser) {
+      // Always reset the default password for demo purposes
+      // Force update by setting isNew to false and marking password as modified
+      existingUser.isNew = false;
+      existingUser.password = DEFAULT_PASSWORD;
+      existingUser.markModified('password'); // Ensure password is marked as modified
+      
+      // Force save with validation
+      await existingUser.save({ validateBeforeSave: true });
 
-    return NextResponse.json({
-      success: true,
-      message: 'Default user password reset',
-      email: DEFAULT_EMAIL,
-      password: DEFAULT_PASSWORD,
-    });
-  }
+      // Verify the password was actually updated by comparing
+      const verifyUser = await User.findOne({ email: DEFAULT_EMAIL }).select('+password');
+      const testMatch = await verifyUser?.comparePassword(DEFAULT_PASSWORD);
+      
+      return NextResponse.json({
+        success: true,
+        message: 'Default user password reset',
+        email: DEFAULT_EMAIL,
+        password: DEFAULT_PASSWORD,
+        verified: testMatch || false,
+      });
+    }
 
   // Create default user
   const user = await User.create({
