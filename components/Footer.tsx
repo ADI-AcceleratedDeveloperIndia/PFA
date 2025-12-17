@@ -1,4 +1,4 @@
-'use client';
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -11,9 +11,11 @@ export default function Footer() {
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2"
         >
-          <img
+          <Image
             src="/A-logo-transparent.png"
             alt="AI Developer India"
+            width={24}
+            height={24}
             className="h-6 w-auto object-contain"
           />
           <span className="text-xs font-medium text-gray-700">
